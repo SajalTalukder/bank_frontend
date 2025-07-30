@@ -211,7 +211,7 @@ const ShareStory = () => {
             <LoadingButton
               isLoading={isLoading}
               type="submit"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded disabled:opacity-50"
+              className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded disabled:opacity-50"
             >
               <span className="inline-flex items-center">
                 <Send className="w-4 h-4 mr-2" />
