@@ -1,10 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { Filter } from "lucide-react";
+import { Filter, Loader } from "lucide-react";
 import { Review } from "@/type";
 import { BASE_API_URL } from "@/server";
 import { useRouter } from "next/navigation";
+import { handleRequest } from "@/components/utils/apiRequest";
+import ReviewCard from "@/components/Review/ReviewCard";
+import { useDebounce } from "@/components/hooks/useDebounce";
 
 const ReviewsPage = () => {
   const [company, setCompany] = useState("");
@@ -14,29 +17,35 @@ const ReviewsPage = () => {
   const [page, setPage] = useState(1);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [totalPages, setTotalPages] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const fetchReviews = async () => {
-    try {
-      const res = await axios.get(`${BASE_API_URL}/reviews/all`, {
+
+  // Debounced values
+  const debouncedCompany = useDebounce(company, 500);
+  const debouncedSearch = useDebounce(search, 500);
+
+  const fetchReviews = useCallback(async () => {
+    const reviewReq = async () =>
+      await axios.get(`${BASE_API_URL}/reviews/all`, {
         params: {
-          companyName: company,
+          companyName: debouncedCompany,
           vibe,
-          search,
+          search: debouncedSearch,
           sort,
           page,
         },
       });
 
-      setReviews(res.data.data.reviews);
-      setTotalPages(res.data.totalPages);
-    } catch (err) {
-      console.error("Error fetching reviews", err);
+    const result = await handleRequest(reviewReq, setIsLoading);
+    if (result?.data.status === "success") {
+      setReviews(result.data.data.reviews);
+      setTotalPages(result.data.totalPages);
     }
-  };
+  }, [debouncedCompany, vibe, debouncedSearch, sort, page]);
 
   useEffect(() => {
     fetchReviews();
-  }, [company, vibe, search, sort, page]);
+  }, [fetchReviews]);
 
   return (
     <div>
@@ -140,41 +149,25 @@ const ReviewsPage = () => {
         </div>
 
         {/* Reviews List */}
-        <div className="grid grid-cols-1 gap-6">
-          {reviews.map((review) => (
-            <div
-              key={review._id}
-              className="border rounded-lg p-4 shadow-sm bg-white"
-            >
-              <div className="flex justify-between items-center mb-2">
-                <h3 className="font-bold text-lg">{review.title}</h3>
-                <span
-                  className={`text-sm px-2 py-1 rounded-full ${
-                    review.vibe === "positive"
-                      ? "bg-green-100 text-green-700"
-                      : review.vibe === "negative"
-                      ? "bg-red-100 text-red-700"
-                      : "bg-gray-100 text-gray-700"
-                  }`}
-                >
-                  {review.vibe}
-                </span>
-              </div>
-              <p className="text-gray-600 text-sm mb-2">
-                {review.isAnonymous ? review.anonymousId : review.name} -{" "}
-                {new Date(review.createdAt).toLocaleDateString()}
-              </p>
-              <p className="text-gray-800">{review.story}</p>
-            </div>
-          ))}
-        </div>
+        {isLoading && (
+          <div className="text-center">
+            <Loader className="w-6 h-6 mx-auto animate-spin" />
+          </div>
+        )}
+        {!isLoading && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            {reviews.map((review) => (
+              <ReviewCard key={review._id} review={review} />
+            ))}
+          </div>
+        )}
 
         {/* Pagination */}
         <div className="flex justify-center mt-8 mb-8 space-x-2">
           {Array.from({ length: totalPages }, (_, i) => (
             <button
               key={i}
-              className={`px-3 py-1 rounded ${
+              className={`px-3 py-1 cursor-pointer rounded ${
                 page === i + 1
                   ? "bg-blue-600 text-white"
                   : "bg-gray-200 text-gray-800"
