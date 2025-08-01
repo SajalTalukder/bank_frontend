@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
   Send,
@@ -14,9 +14,13 @@ import { handleRequest } from "@/components/utils/apiRequest";
 import { toast } from "sonner";
 import { LoadingButton } from "@/components/utils/LoadingButton";
 import { useRouter } from "next/navigation";
+import Select from "react-select";
+import { CompanyType } from "@/type";
 
 const ShareStory = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [companies, setCompanies] = useState<CompanyType[]>([]);
+
   const [formData, setFormData] = useState({
     vibe: "neutral",
     companyName: "",
@@ -27,6 +31,20 @@ const ShareStory = () => {
     story: "",
   });
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      const companyReq = async () =>
+        await axios.get(`${BASE_API_URL}/companies/all`);
+      const result = await handleRequest(companyReq);
+      if (result?.data.status === "success") {
+        setCompanies(result.data.data.companies);
+      }
+    };
+
+    fetchCompanies();
+  }, []);
+
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -74,6 +92,11 @@ const ShareStory = () => {
     }
   };
 
+  const companyOptions = companies.map((c) => ({
+    label: c.name,
+    value: c.name,
+  }));
+
   return (
     <div className="min-h-screen mt-10 bg-gray-100 py-10">
       <div className="max-w-3xl mx-auto bg-white p-6 rounded-md shadow-md">
@@ -88,17 +111,24 @@ const ShareStory = () => {
               <Heart className="inline w-4 h-4 mr-2" />
               Vibe
             </label>
-            <select
+            <Select
               name="vibe"
-              value={formData.vibe}
-              onChange={handleChange}
-              required
-              className="w-full border px-3 py-2 rounded"
-            >
-              <option value="neutral">Neutral</option>
-              <option value="positive">Positive</option>
-              <option value="negative">Negative</option>
-            </select>
+              options={[
+                { value: "neutral", label: "Neutral" },
+                { value: "positive", label: "Positive" },
+                { value: "negative", label: "Negative" },
+              ]}
+              value={{
+                value: formData.vibe,
+                label:
+                  formData.vibe.charAt(0).toUpperCase() +
+                  formData.vibe.slice(1),
+              }}
+              onChange={(selected) =>
+                setFormData({ ...formData, vibe: selected?.value || "neutral" })
+              }
+              isSearchable={false}
+            />
           </div>
 
           {/* Company Name */}
@@ -107,20 +137,17 @@ const ShareStory = () => {
               <Building2 className="inline w-4 h-4 mr-2" />
               Company
             </label>
-            <input
-              list="companies"
-              name="companyName"
-              value={formData.companyName}
-              onChange={handleChange}
-              placeholder="Type or select company name"
-              required
-              className="w-full border px-3 py-2 rounded"
+            <Select
+              options={companyOptions}
+              value={companyOptions.find(
+                (opt) => opt.value === formData.companyName
+              )}
+              onChange={(selected) =>
+                setFormData({ ...formData, companyName: selected?.value || "" })
+              }
+              placeholder="Select a company..."
+              isSearchable
             />
-            {/* <datalist id="companies">
-              {companies.map((company) => (
-                <option key={company.id} value={company.name} />
-              ))}
-            </datalist> */}
           </div>
 
           {/* Anonymous Toggle */}
@@ -158,20 +185,31 @@ const ShareStory = () => {
               <Briefcase className="inline w-4 h-4 mr-2" />
               User Type
             </label>
-            <select
+            <Select
               name="userType"
-              value={formData.userType}
-              onChange={handleChange}
-              required
-              className="w-full border px-3 py-2 rounded"
-            >
-              <option value="individual customer">Individual Customer</option>
-              <option value="business customer">Business Customer</option>
-              <option value="bank employee">Bank Employee</option>
-              <option value="former employee">Former Employee</option>
-              <option value="investor">Investor</option>
-              <option value="other">Other</option>
-            </select>
+              options={[
+                { value: "individual customer", label: "Individual Customer" },
+                { value: "business customer", label: "Business Customer" },
+                { value: "bank employee", label: "Bank Employee" },
+                { value: "former employee", label: "Former Employee" },
+                { value: "investor", label: "Investor" },
+                { value: "other", label: "Other" },
+              ]}
+              value={{
+                value: formData.userType,
+                label: formData.userType
+                  .split(" ")
+                  .map((word) => word[0].toUpperCase() + word.slice(1))
+                  .join(" "),
+              }}
+              onChange={(selected) =>
+                setFormData({
+                  ...formData,
+                  userType: selected?.value || "individual customer",
+                })
+              }
+              isSearchable
+            />
           </div>
 
           {/* Title */}

@@ -21,3 +21,13 @@ export interface Review {
   createdAt: string;
   updatedAt: string;
 }
+
+export type CompanyType = {
+  _id: string;
+  name: string;
+  positiveCount: number;
+  negativeCount: number;
+  totalReviews: number;
+  nutralCount: number;
+  reviews: Review[];
+};

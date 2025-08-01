@@ -55,9 +55,7 @@ const ReviewCard = ({ review }: Props) => {
 
       {/* Review Content */}
       <div className="mb-6">
-        <p className="text-gray-700 text-xl leading-relaxed">
-          {displayContent}
-        </p>
+        <p className="text-gray-700  leading-relaxed">{displayContent}</p>
 
         {shouldShowSeeMore && (
           <button
