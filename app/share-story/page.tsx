@@ -13,6 +13,7 @@ import { BASE_API_URL } from "@/server";
 import { handleRequest } from "@/components/utils/apiRequest";
 import { toast } from "sonner";
 import { LoadingButton } from "@/components/utils/LoadingButton";
+import { useRouter } from "next/navigation";
 
 const ShareStory = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -25,7 +26,7 @@ const ShareStory = () => {
     title: "",
     story: "",
   });
-
+  const router = useRouter();
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -69,6 +70,7 @@ const ShareStory = () => {
         title: "",
         story: "",
       });
+      router.push("/reviews");
     }
   };
 
