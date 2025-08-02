@@ -131,20 +131,25 @@ const CompanyCard = ({ companies }: Props) => {
                 <div className="flex justify-between text-xs text-gray-500 mb-1">
                   <span>Positive Ratio</span>
                   <span>
-                    {(
-                      (company.positiveCount / company.totalReviews) *
-                      100
-                    ).toFixed(1)}
-                    %
+                    {company.totalReviews > 0
+                      ? `${(
+                          (company.positiveCount / company.totalReviews) *
+                          100
+                        ).toFixed(1)}%`
+                      : "0.0%"}
                   </span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
                   <div
                     className="bg-gradient-to-r from-green-400 to-green-600 h-2 rounded-full transition-all duration-500"
                     style={{
-                      width: `${
-                        (company.positiveCount / company.totalReviews) * 100
-                      }%`,
+                      width:
+                        company.totalReviews > 0
+                          ? `${
+                              (company.positiveCount / company.totalReviews) *
+                              100
+                            }%`
+                          : "0%",
                     }}
                   ></div>
                 </div>
