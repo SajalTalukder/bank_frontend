@@ -30,4 +30,5 @@ export type CompanyType = {
   totalReviews: number;
   nutralCount: number;
   reviews: Review[];
+  complaintRate: number;
 };
