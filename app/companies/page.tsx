@@ -90,14 +90,18 @@ const CompanyPage = () => {
     }
   };
 
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   // Calculate if this is the last page
   const isLastPage = page * limit >= totalCompanies;
 
   return (
-    <div className="w-[80%] mx-auto mb-8 mt-[8rem]">
+    <div className="sm:w-[80%] w-full p-8 mx-auto mb-8 mt-[8rem]">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <h1 className="sm:text-3xl text-2xl font-bold text-gray-900 mb-2">
           Company Statistics
         </h1>
         <p className="text-gray-600">
@@ -127,7 +131,7 @@ const CompanyPage = () => {
         {/* Sort Controls */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            <h2 className="sm:text-2xl text-xl font-bold text-gray-900 mb-2">
               Company Performance Rankings
             </h2>
             <p className="text-gray-600">Click on metrics to sort companies</p>
@@ -139,7 +143,7 @@ const CompanyPage = () => {
                 placeholder="Search companies..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg  focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full px-4 py-2 border placeholder:text-base sm:placeholder:text-base border-gray-300 rounded-lg  focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
             <button
@@ -177,7 +181,10 @@ const CompanyPage = () => {
         {/* Pagination Controls */}
         <div className="mt-8 flex justify-center items-center space-x-4">
           <button
-            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            onClick={() => {
+              setPage((prev) => Math.max(prev - 1, 1));
+              scrollToTop();
+            }}
             disabled={page === 1}
             className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
           >
@@ -185,7 +192,10 @@ const CompanyPage = () => {
           </button>
           <span className="text-gray-700 font-medium">Page {page}</span>
           <button
-            onClick={() => setPage((prev) => prev + 1)}
+            onClick={() => {
+              setPage((prev) => prev + 1);
+              scrollToTop();
+            }}
             disabled={isLastPage}
             className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
           >

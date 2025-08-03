@@ -15,7 +15,7 @@ const Nav = ({ openNav }: Props) => {
   const pathname = usePathname();
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50">
+    <div className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50">
       <div className="w-[90%] mx-auto ">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -71,7 +71,7 @@ const Nav = ({ openNav }: Props) => {
           </div>
         </div>
       </div>
-    </header>
+    </div>
   );
 };
 

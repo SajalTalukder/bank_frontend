@@ -59,14 +59,14 @@ const CompanyDetails = ({ id }: Props) => {
   }
 
   return (
-    <div className="mt-[8rem] w-[80%] mx-auto">
+    <div className="mt-[8rem] sm:w-[80%] w-full p-6  mx-auto">
       <div className=" p-6 border-b border-gray-200">
         <div className="flex items-center space-x-4">
           <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-xl">
             <Building2 className="w-6 h-6" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">
+            <h2 className="sm:text-2xl text-xl font-bold text-gray-900">
               {company?.name}
             </h2>
             {/* <span
@@ -80,9 +80,9 @@ const CompanyDetails = ({ id }: Props) => {
         </div>
       </div>
       {/* content */}
-      <div className="p-8">
+      <div>
         {/* Key matrix */}
-        <div className="mb-8">
+        <div className="mb-8 mt-8">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
             Key Performance Metrics
           </h3>
@@ -158,13 +158,13 @@ const CompanyDetails = ({ id }: Props) => {
           >
             <div className="flex items-center justify-between mb-4">
               <div>
-                <p className="text-3xl font-bold">
+                <p className="sm:text-3xl text-2xl font-bold">
                   {company?.complaintRate.toFixed(1)}%
                 </p>
                 <p className="text-sm font-medium">Current Complaint Rate</p>
               </div>
               <div className="text-right">
-                <p className="text-lg font-semibold">
+                <p className="sm:text-lg  text-base font-semibold">
                   {(company?.complaintRate ?? 0) <= 20
                     ? "Excellent"
                     : (company?.complaintRate ?? 0) <= 30
@@ -202,12 +202,12 @@ const CompanyDetails = ({ id }: Props) => {
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
             Review Distribution
           </h3>
-          <div className="bg-gray-50 rounded-lg p-6">
+          <div className="bg-gray-50 rounded-lg ">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div className="w-4 h-4 bg-green-500 rounded-full"></div>
-                  <span className="font-medium text-gray-700">
+                  <span className="font-medium flex-1 text-gray-700">
                     Positive Reviews
                   </span>
                 </div>
@@ -227,7 +227,7 @@ const CompanyDetails = ({ id }: Props) => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div className="w-4 h-4 bg-yellow-500 rounded-full"></div>
-                  <span className="font-medium text-gray-700">
+                  <span className="font-medium flex-1 text-gray-700">
                     Neutral Reviews
                   </span>
                 </div>
@@ -247,7 +247,7 @@ const CompanyDetails = ({ id }: Props) => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div className="w-4 h-4 bg-red-500 rounded-full"></div>
-                  <span className="font-medium text-gray-700">
+                  <span className="font-medium flex-1 text-gray-700">
                     Negative Reviews
                   </span>
                 </div>

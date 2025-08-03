@@ -10,27 +10,36 @@ type Props = {
 };
 
 const MobileNav = ({ closeNav, showNav }: Props) => {
-  const navOpen = showNav ? "translate-x-0" : "translate-x-[100%]";
+  const navOpen = showNav ? "translate-x-0" : "translate-x-[-200%]";
 
   return (
     <div>
       {/* Overlay */}
       <div
-        className={`fixed ${navOpen} top-0 inset-0 transform transition-all right-0 duration-500 z-[100002] bg-black opacity-70 w-full h-screen`}
+        className={`fixed ${navOpen} top-0 inset-0 transform transition-all  duration-500 z-[100002] bg-black opacity-70 w-full h-screen`}
       ></div>
       {/* navlinks */}
       <div
-        className={`text-white top-0 ${navOpen} fixed justify-center flex flex-col h-full transform transition-all duration-500 delay-300 w-[80%] sm:w-[60%] bg-cyan-800 space-y-6 z-[1000050] right-0`}
+        className={`text-white top-0 ${navOpen} fixed justify-center flex flex-col h-full transform transition-all duration-500 delay-300 w-[80%] sm:w-[60%] bg-gray-900 space-y-6 z-[1000050] `}
       >
         {navigation.map((link) => {
           return (
             <Link key={link.name} href={link.href} onClick={closeNav}>
-              <p className="text-white w-fit text-xl ml-12 border-b-[1.5px] pb-1 border-white sm:text-[30px]">
+              <p className="text-white w-fit text-2xl ml-12 border-b-[1.5px] pb-2 border-white sm:text-[30px]">
                 {link.name}
               </p>
             </Link>
           );
         })}
+
+        <Link
+          href="/want-to-know"
+          className="  text-white w-fit text-2xl ml-12 border-b-[1.5px] pb-2 border-white sm:text-[30px]"
+        >
+          <span className="text-xl font-medium whitespace-nowrap">
+            Want to Know
+          </span>
+        </Link>
 
         {/* Close icon */}
         <X

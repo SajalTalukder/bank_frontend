@@ -49,7 +49,7 @@ const ReviewsPage = () => {
 
   return (
     <div>
-      <div className="w-[80%] mx-auto mt-[10rem]">
+      <div className="sm:w-[80%] w-full p-6 mx-auto mt-[8rem]">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Reviews</h1>

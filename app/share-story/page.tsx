@@ -100,7 +100,7 @@ const ShareStory = () => {
   return (
     <div className="min-h-screen mt-10 bg-gray-100 py-10">
       <div className="max-w-3xl mx-auto bg-white p-6 rounded-md shadow-md">
-        <h2 className="text-2xl font-bold mb-4 text-center">
+        <h2 className="text-xl sm:text-2xl font-bold mb-4 text-center">
           Share Your Banking Experience
         </h2>
 

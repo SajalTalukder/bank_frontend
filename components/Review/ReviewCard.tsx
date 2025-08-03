@@ -33,8 +33,8 @@ const ReviewCard = ({ review }: Props) => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 space-y-3 sm:space-y-0">
         <div className="flex-1">
-          <div className="flex items-center space-x-3 mb-3">
-            <h3 className="text-xl font-bold text-gray-900">
+          <div className="flex flex-wrap  items-center space-x-3 mb-3">
+            <h3 className="sm:text-xl text-lg font-bold text-gray-900">
               {review.companyName}
             </h3>
             <span
@@ -49,18 +49,20 @@ const ReviewCard = ({ review }: Props) => {
       </div>
 
       {/* Review Title */}
-      <h4 className="text-lg font-semibold text-gray-800 mb-4 leading-relaxed">
+      <h4 className="sm:text-lg text-base font-semibold text-gray-800 mb-4 leading-relaxed">
         {review.title}
       </h4>
 
       {/* Review Content */}
       <div className="mb-6">
-        <p className="text-gray-700  leading-relaxed">{displayContent}</p>
+        <p className="text-gray-700 text-sm sm:text-base  leading-relaxed">
+          {displayContent}
+        </p>
 
         {shouldShowSeeMore && (
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="mt-4 flex items-center space-x-1 text-blue-600 hover:text-blue-700 font-semibold transition-colors text-base"
+            className="mt-4 flex items-center space-x-1 text-blue-600 hover:text-blue-700 font-semibold transition-colors text-sm sm:text-base"
           >
             <span>{isExpanded ? "See Less" : "See More"}</span>
             {isExpanded ? (
@@ -76,11 +78,11 @@ const ReviewCard = ({ review }: Props) => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-4 border-t border-gray-100 space-y-2 sm:space-y-0">
         <div className="flex items-center space-x-2 text-gray-600">
           <User className="w-4 h-4" />
-          <span className="font-medium">
+          <span className="font-medium text-sm sm:text-base">
             {review?.name || review?.anonymousId}
           </span>
         </div>
-        <div className="flex items-center space-x-2 text-gray-500">
+        <div className="flex items-center text-sm sm:text-base space-x-2 text-gray-500">
           <Calendar className="w-4 h-4" />
           <span>
             {new Date(review.createdAt).toLocaleDateString("en-US", {
@@ -95,7 +97,7 @@ const ReviewCard = ({ review }: Props) => {
       {/* Helpful Actions */}
       <div className="mt-4 pt-4 border-t border-gray-100">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
+          <div className="hidden sm:flex items-center space-x-4">
             <button className="flex items-center space-x-1 text-gray-500 hover:text-blue-600 transition-colors">
               <span className="text-sm">👍</span>
               <span className="text-sm font-medium">Helpful</span>
