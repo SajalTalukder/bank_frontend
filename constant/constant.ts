@@ -5,5 +5,5 @@ export const navigation = [
   { name: "Share Story", href: "/share-story", icon: PenTool },
   { name: "Reviews", href: "/reviews", icon: FileText },
   { name: "Companies", href: "/companies", icon: Briefcase },
-  { name: "Blog", href: "/blog", icon: FileText },
+  { name: "Blog", href: "/", icon: FileText },
 ];
