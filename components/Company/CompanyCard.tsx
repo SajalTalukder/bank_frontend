@@ -1,5 +1,6 @@
 import { CompanyType } from "@/type";
 import { TrendingDown, TrendingUp, Users } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 type Props = {
@@ -7,18 +8,18 @@ type Props = {
 };
 
 const CompanyCard = ({ companies }: Props) => {
-  console.log("COMPANY", companies);
+  const router = useRouter();
 
-  const getVibeColor = (vibe: string) => {
-    switch (vibe) {
-      case "positive":
-        return "bg-green-100 text-green-800 border-green-200";
-      case "negative":
-        return "bg-red-100 text-red-800 border-red-200";
-      default:
-        return "bg-yellow-100 text-yellow-800 border-yellow-200";
-    }
-  };
+  // const getVibeColor = (vibe: string) => {
+  //   switch (vibe) {
+  //     case "positive":
+  //       return "bg-green-100 text-green-800 border-green-200";
+  //     case "negative":
+  //       return "bg-red-100 text-red-800 border-red-200";
+  //     default:
+  //       return "bg-yellow-100 text-yellow-800 border-yellow-200";
+  //   }
+  // };
 
   const getComplaintRateColor = (rate: number) => {
     if (rate > 35) return "text-red-600 bg-red-50";
@@ -157,7 +158,12 @@ const CompanyCard = ({ companies }: Props) => {
             </div>
 
             {/* Action Button */}
-            <div className="mt-6 pt-4 border-t border-gray-100">
+            <div
+              onClick={() => {
+                router.push(`/companies/${company._id}`);
+              }}
+              className="mt-6 pt-4 border-t border-gray-100"
+            >
               <button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white py-2 px-4 rounded-lg font-medium transition-all duration-200 transform hover:scale-105">
                 View Details
               </button>
