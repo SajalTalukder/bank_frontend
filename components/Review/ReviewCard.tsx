@@ -11,6 +11,7 @@ const ReviewCard = ({ review }: Props) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const maxLength = 150;
   const shouldShowSeeMore = review?.story?.length > maxLength;
+  console.log(review);
 
   const getVibeColor = (vibe: string) => {
     switch (vibe) {
