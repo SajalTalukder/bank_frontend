@@ -110,7 +110,7 @@ const CompanyDetails = ({ id }: Props) => {
                 {company?.positiveCount}
               </p>
               <p className="text-sm text-green-700">
-                {positivePercent}% of total
+                {positivePercent.toFixed(2)}% of total
               </p>
             </div>
 
@@ -125,7 +125,7 @@ const CompanyDetails = ({ id }: Props) => {
                 {company?.nutralCount}
               </p>
               <p className="text-sm text-yellow-700">
-                {neutralPercent}% of total
+                {neutralPercent.toFixed(2)}% of total
               </p>
             </div>
 
